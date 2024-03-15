@@ -122,17 +122,40 @@ public class Libri extends CollezioneEditoriale {
         System.out.print("Inserisci l'autore del libro: ");
         String autore = scanner.nextLine();
 
-        System.out.print("Inserisci il numero delle pagine del libro: ");
-        int numberOfPages = Integer.parseInt(scanner.nextLine());
+        int numberOfPages = 0;
+        while (true) {
+            System.out.print("Inserisci il numero delle pagine del libro: ");
+            String numero = scanner.nextLine();
 
+            try {
+                numberOfPages = Integer.parseInt(numero);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("non hai inserito un numero.");
+            }
+
+        }
+
+        int yearOfPublication = 0;
+        while (true) {
         System.out.print("Inserisci l'anno di pubblicazione del libro: ");
-        int yearOfPublication = Integer.parseInt(scanner.nextLine());
+
+            String anno = scanner.nextLine();
+
+            try {
+                yearOfPublication = Integer.parseInt(anno);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("non hai inserito un numero.");
+            }
+
+        }
 
 
-        listaLibri.add(new Libri(isbn,titolo,genere,autore,numberOfPages,yearOfPublication));
+        listaLibri.add(new Libri(isbn, titolo, genere, autore, numberOfPages, yearOfPublication));
 
         System.out.println("Libro aggiunto con successo!");
-       salvaLibri();
+        salvaLibri();
     }
 
     public static void rimuoviLibro(List<Libri> listaLibri, Scanner scanner){
