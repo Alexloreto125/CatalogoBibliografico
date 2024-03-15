@@ -1,14 +1,10 @@
 package org.example.catalogo;
 
-import org.example.catalogo.salvati.FilesMain;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 import static org.example.Application.*;
-import static org.example.catalogo.Riviste.accediRiviste;
-import static org.example.catalogo.Riviste.aggiungiRivista;
 
 public class Libri extends CollezioneEditoriale {
 
@@ -21,7 +17,24 @@ public class Libri extends CollezioneEditoriale {
         this.genere = genere;
     }
 
+    @Override
+    public String toString() {
+        return "Libri{" +
+                "ISBN='"+isbn+"' "+
+                "autore='" + autore + '\'' +
+                ", genere='" + genere + '\'' +
+                '\'' +
+                ", titolo='" + titolo + '\'' +
+                '}';
+    }
 
+        public void ricercaToString(){
+        System.out.println("Titolo: " + this.getTitolo() + "\n" +
+                "Autore: " + this.getAutore() + "\n" +
+                "Genere: " + this.getGenere() + "\n" +
+                "Numero di pagine: " + this.getNumberOfPages() + "\n" +
+                "Anno di pubblicazione: " + this.getYearOfPublication()); ;
+        }
 
 
     public String getAutore() {
@@ -41,37 +54,39 @@ public class Libri extends CollezioneEditoriale {
     }
 
     public static void accediLibri(List<Libri> listaLibri, Scanner scanner) {
-        caricaLibri();
+//        caricaLibri();
         System.out.println("Elenco dei libri:");
         for (Libri libro : listaLibri) {
-            System.out.println(libro.getTitolo() + " - " + libro.getAutore());
+            System.out.println(libro);
         }
 
         while (true) {
             System.out.println("Benvenuto nel catalogo di libri");
             System.out.println("Scegli un'opzione:");
             System.out.println("1. Rimuovi Libro");
-            System.out.println("2. Esci");
-            System.out.print("Scelta: ");
+            System.out.println("2. Ricerca libro tramite ISBN");
+            System.out.println("3. Esci");
+            System.out.println("Scelta: ");
 
             int scelta = Integer.parseInt(scanner.nextLine());
-
-            scanner.nextLine();
 
             switch (scelta) {
                 case 1:
                     rimuoviLibro(listaLibri,scanner);
                     break;
+
                 case 2:
+                    ricercaIsbn(listaLibri,scanner);
+                    break;
+                case 3:
 
                     System.out.println("Arrivederci!");
                     return;
+
                 default:
                     System.out.println("Opzione non valida, riprova.");
             }
         }
-
-
 
     }
     public static void aggiungiLibro(List<Libri> listaLibri) {
@@ -119,6 +134,21 @@ public class Libri extends CollezioneEditoriale {
                 return;
             }
         }
+        System.out.println("Nessun libro trovato");
+
+    }
+
+    public static void ricercaIsbn(List<Libri> listaLibri,Scanner scanner){
+        System.out.println("Inserisci il codice isbn del libro da cercare");
+        String isbn= scanner.nextLine();
+
+        for (Libri libro : listaLibri) {
+            if (isbn.equals(libro.getIsbn())) {
+                libro.ricercaToString();
+            }
+        }
+
+
         System.out.println("Nessun libro trovato");
 
     }

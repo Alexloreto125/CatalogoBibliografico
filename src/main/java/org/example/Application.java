@@ -26,7 +26,7 @@ public class Application {
 
 
     public static void main(String[] args) {
-
+        caricaLibri();
         Scanner scanner = new Scanner(System.in);
 
 
