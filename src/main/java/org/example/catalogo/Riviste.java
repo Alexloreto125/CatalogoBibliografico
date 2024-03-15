@@ -15,6 +15,12 @@ public class Riviste extends CollezioneEditoriale{
     public Periodicita getPeriodicita() {
         return periodicita;
     }
+    private void ricercaRivisteToString() {
+        System.out.println("IBSN: "+ this.getIsbn()+ "\n"+
+                "Titolo: " + this.getTitolo() + "\n" +
+                "Numero di pagine: " + this.getNumberOfPages() + "\n" +
+                "Anno di pubblicazione: " + this.getYearOfPublication()); ;;
+    }
 
 
     public Riviste(String isbn, String titolo, int numberOfPages, int yearOfPublication,Periodicita periodicita) {
@@ -108,4 +114,21 @@ public class Riviste extends CollezioneEditoriale{
         System.out.println("Nessuna rivista trovata");
 
     }
+
+    public static void ricercaRivistaPerIsbn(List<Riviste> listaRiviste,Scanner scanner) {
+        System.out.println("Inserisci il codice isbn del libro da cercare");
+        String isbn = scanner.nextLine();
+
+        for (Riviste riviste : listaRiviste) {
+            if (isbn.equals(riviste.getIsbn())) {
+                riviste.ricercaRivisteToString();
+            }
+        }
+
+
+        System.out.println("Nessun libro trovato");
+    }
+
+
+
 }

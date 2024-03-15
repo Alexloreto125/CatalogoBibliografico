@@ -29,7 +29,8 @@ public class Libri extends CollezioneEditoriale {
     }
 
         public void ricercaToString(){
-        System.out.println("Titolo: " + this.getTitolo() + "\n" +
+        System.out.println("IBSN: "+ this.getIsbn()+ "\n"+
+                "Titolo: " + this.getTitolo() + "\n" +
                 "Autore: " + this.getAutore() + "\n" +
                 "Genere: " + this.getGenere() + "\n" +
                 "Numero di pagine: " + this.getNumberOfPages() + "\n" +
