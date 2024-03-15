@@ -37,6 +37,7 @@ public class Libri extends CollezioneEditoriale {
         }
 
 
+
     public String getAutore() {
         return autore;
     }
@@ -65,7 +66,9 @@ public class Libri extends CollezioneEditoriale {
             System.out.println("Scegli un'opzione:");
             System.out.println("1. Rimuovi Libro");
             System.out.println("2. Ricerca libro tramite ISBN");
-            System.out.println("3. Esci");
+            System.out.println("3. Ricerca libro tramite Anno di pubblicazione");
+            System.out.println("4. Ricerca libro tramite Autore");
+            System.out.println("5. Esci");
             System.out.println("Scelta: ");
 
             int scelta = Integer.parseInt(scanner.nextLine());
@@ -78,7 +81,15 @@ public class Libri extends CollezioneEditoriale {
                 case 2:
                     ricercaIsbn(listaLibri,scanner);
                     break;
+
                 case 3:
+                    ricercaPerAnno(listaLibri,scanner);
+                    break;
+                case 4:
+                    ricercaPerAutore(listaLibri,scanner);
+                    break;
+
+                case 5:
 
                     System.out.println("Arrivederci!");
                     return;
@@ -138,9 +149,9 @@ public class Libri extends CollezioneEditoriale {
 
     }
 
-    public static void ricercaIsbn(List<Libri> listaLibri,Scanner scanner){
+    public static void ricercaIsbn(List<Libri> listaLibri,Scanner scanner) {
         System.out.println("Inserisci il codice isbn del libro da cercare");
-        String isbn= scanner.nextLine();
+        String isbn = scanner.nextLine();
 
         for (Libri libro : listaLibri) {
             if (isbn.equals(libro.getIsbn())) {
@@ -150,8 +161,43 @@ public class Libri extends CollezioneEditoriale {
 
 
         System.out.println("Nessun libro trovato");
+    }
+
+    public static void ricercaPerAnno(List<Libri> listaLibri,Scanner scanner){
+        System.out.println("Inserisci l'anno di pubblicazione del libro da cercare");
+        int yearOfPubblication= Integer.parseInt(scanner.nextLine());
+                System.out.println("Questi sono i libri trovati in base all'anno di pubblicazione: ");
+
+        for (Libri libro : listaLibri) {
+            if (yearOfPubblication==libro.getYearOfPublication()) {
+                libro.ricercaToString();
+                System.out.println("---------------------------------------------");
+            }
+        }
+
+
+        System.out.println("Nessun libro trovato");
 
     }
+
+    public static void ricercaPerAutore(List<Libri> listaLibri,Scanner scanner){
+        System.out.println("Inserisci l'autore del libro da cercare");
+        String autore= scanner.nextLine();
+        System.out.println("Questi sono i libri trovati in base all'autore:  ");
+
+        for (Libri libro : listaLibri) {
+            if (autore.equals(libro.getAutore())) {
+                libro.ricercaToString();
+                System.out.println("---------------------------------------------");
+            }
+        }
+
+
+        System.out.println("Nessun libro trovato");
+
+
+    }
+
 
 
 }
