@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,9 +41,12 @@ public class Application {
             System.out.println("3. Esci");
             System.out.print("Scelta: ");
 
-            int scelta = scanner.nextInt();
+            try {
 
-            scanner.nextLine();
+
+            int scelta = Integer.parseInt(scanner.nextLine());
+
+//            scanner.nextLine();
 
             switch (scelta) {
                 case 1:
@@ -58,9 +62,12 @@ public class Application {
                     System.out.println("Opzione non valida, riprova.");
                }
              }
+            catch (NumberFormatException e){
+                System.out.println("Errore: inserisci un numero valido!");
+            }
          }
 
-
+    }
     public static void salvaLibri() {
 
         File fileLibri = new File("src/main/java/org/example/catalogo/salvati/fileLibri.txt");

@@ -104,15 +104,16 @@ public class Libri extends CollezioneEditoriale {
                     default:
                         System.out.println("Opzione non valida, riprova.");
                 }
-            } catch (NumberFormatException e){
-                System.out.println("Errore: Inserisci un numero valido per la scelta.");
+            } catch (InputMismatchException e){
+                System.out.println("Errore: Inserisci un numero valido d");
             }
 
         }
     }
+
+
     public static void aggiungiLibro(List<Libri> listaLibri) {
         Scanner scanner = new Scanner(System.in);
-
 
         System.out.print("Inserisci il codice isbn del libro: ");
         String isbn = scanner.nextLine();
@@ -136,7 +137,7 @@ public class Libri extends CollezioneEditoriale {
                 numberOfPages = Integer.parseInt(numero);
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("non hai inserito un numero.");
+                System.out.println("non hai inserito un numero");
             }
 
         }
@@ -161,6 +162,7 @@ public class Libri extends CollezioneEditoriale {
 
         System.out.println("Libro aggiunto con successo!");
         salvaLibri();
+        accediLibri(listaLibri,scanner);
     }
 
     public static void rimuoviLibro(List<Libri> listaLibri, Scanner scanner){
