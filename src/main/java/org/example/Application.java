@@ -3,6 +3,7 @@ package org.example;
 import org.apache.commons.io.FileUtils;
 import org.example.catalogo.CollezioneEditoriale;
 import org.example.catalogo.Libri;
+import org.example.catalogo.Periodicita;
 import org.example.catalogo.Riviste;
 import org.example.catalogo.salvati.FilesMain;
 
@@ -27,6 +28,7 @@ public class Application {
 
     public static void main(String[] args) {
         caricaLibri();
+        caricaRiviste();
         Scanner scanner = new Scanner(System.in);
 
 
@@ -52,12 +54,8 @@ public class Application {
                 case 2:
                     accediRiviste(listaRiviste);
                     break;
-                case 3:
-                    aggiungiLibro(listaLibri);
-                    break;
-                case 4:
-                    aggiungiRivista(listaRiviste);
-                    break;
+
+
                 case 5:
                     System.out.println("Arrivederci!");
                     return;
@@ -108,6 +106,49 @@ public class Application {
             System.out.println("Errore durante il caricamento dei libri: " + e.getMessage());
         }
     }
+
+    public static void salvaRiviste() {
+
+        File fileRiviste = new File("src/main/java/org/example/catalogo/salvati/fileRiviste.txt");
+        try {
+
+            if (!fileRiviste.exists()) {
+                fileRiviste.createNewFile();
+            }
+
+            StringBuilder content = new StringBuilder();
+            for (Riviste rivista : listaRiviste) {
+                content.append(rivista.getIsbn()).append(",").append(rivista.getTitolo()).append(",").append(rivista.getNumberOfPages()).append(",").append(rivista.getYearOfPublication()).append("\n");
+            }
+
+
+            FileUtils.writeStringToFile(fileRiviste, content.toString(), "UTF-8");
+
+            System.out.println("Riviste salvate correttamente.");
+        } catch (IOException e) {
+            System.out.println("Errore durante il salvataggio delle riviste: " + e.getMessage());
+        }
+    }
+
+    public static void caricaRiviste() {
+        File fileRiviste = new File("src/main/java/org/example/catalogo/salvati/fileRiviste.txt");
+
+        try {
+            List<String> letturaRiviste = FileUtils.readLines(fileRiviste, StandardCharsets.UTF_8);
+            for (String lettura : letturaRiviste) {
+                String[] parti = lettura.split(",");
+                if (parti.length == 4) {
+                    listaRiviste.add(new Riviste(parti[0], parti[1],Integer.parseInt(parti[2]),Integer.parseInt(parti[3]),Periodicita.valueOf(parti[4].toLowerCase()))) ;
+                }
+            }
+            System.out.println("Libri caricati correttamente.");
+        } catch (IOException e) {
+            System.out.println("Errore durante il caricamento dei libri: " + e.getMessage());
+        }
+    }
+
+
+
 
 }
 

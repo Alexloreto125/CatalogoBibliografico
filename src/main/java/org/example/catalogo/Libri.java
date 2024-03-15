@@ -64,32 +64,36 @@ public class Libri extends CollezioneEditoriale {
         while (true) {
             System.out.println("Benvenuto nel catalogo di libri");
             System.out.println("Scegli un'opzione:");
-            System.out.println("1. Rimuovi Libro");
-            System.out.println("2. Ricerca libro tramite ISBN");
-            System.out.println("3. Ricerca libro tramite Anno di pubblicazione");
-            System.out.println("4. Ricerca libro tramite Autore");
-            System.out.println("5. Esci");
+            System.out.println("1. Aggiungi Libro");
+            System.out.println("2. Rimuovi Libro");
+            System.out.println("3. Ricerca libro tramite ISBN");
+            System.out.println("4. Ricerca libro tramite Anno di pubblicazione");
+            System.out.println("5. Ricerca libro tramite Autore");
+            System.out.println("6. Esci");
             System.out.println("Scelta: ");
 
             int scelta = Integer.parseInt(scanner.nextLine());
 
             switch (scelta) {
                 case 1:
+                    aggiungiLibro(listaLibri);
+                    break;
+                case 2:
                     rimuoviLibro(listaLibri,scanner);
                     break;
 
-                case 2:
+                case 3:
                     ricercaIsbn(listaLibri,scanner);
                     break;
 
-                case 3:
+                case 4:
                     ricercaPerAnno(listaLibri,scanner);
                     break;
-                case 4:
+                case 5:
                     ricercaPerAutore(listaLibri,scanner);
                     break;
 
-                case 5:
+                case 6:
 
                     System.out.println("Arrivederci!");
                     return;
