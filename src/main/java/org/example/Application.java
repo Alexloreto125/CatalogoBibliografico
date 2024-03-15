@@ -26,7 +26,7 @@ public class Application {
 
 
     public static void main(String[] args) {
-        caricaLibri();
+
         Scanner scanner = new Scanner(System.in);
 
 
@@ -46,7 +46,7 @@ public class Application {
 
             switch (scelta) {
                 case 1:
-                    accediLibri(listaLibri);
+                    accediLibri(listaLibri,scanner);
 
                     break;
                 case 2:

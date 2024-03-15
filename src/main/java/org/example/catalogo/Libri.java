@@ -2,10 +2,11 @@ package org.example.catalogo;
 
 import org.example.catalogo.salvati.FilesMain;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.example.Application.salvaLibri;
+import static org.example.Application.*;
 import static org.example.catalogo.Riviste.accediRiviste;
 import static org.example.catalogo.Riviste.aggiungiRivista;
 
@@ -39,37 +40,38 @@ public class Libri extends CollezioneEditoriale {
         this.genere = genere;
     }
 
-    public static void accediLibri(List<Libri> listaLibri) {
-        Scanner scanner= new Scanner(System.in);
+    public static void accediLibri(List<Libri> listaLibri, Scanner scanner) {
+        caricaLibri();
         System.out.println("Elenco dei libri:");
         for (Libri libro : listaLibri) {
             System.out.println(libro.getTitolo() + " - " + libro.getAutore());
         }
 
         while (true) {
-            System.out.println("Benvenuto nel catalogo di libri e riviste!");
+            System.out.println("Benvenuto nel catalogo di libri");
             System.out.println("Scegli un'opzione:");
-            System.out.println("1. Rimuovi un libro");
-            System.out.println("2. Torna indietro");
+            System.out.println("1. Rimuovi Libro");
+            System.out.println("2. Esci");
             System.out.print("Scelta: ");
 
-            int scelta = scanner.nextInt();
+            int scelta = Integer.parseInt(scanner.nextLine());
 
             scanner.nextLine();
 
             switch (scelta) {
                 case 1:
-                    accediLibri(listaLibri);
-
+                    rimuoviLibro(listaLibri,scanner);
                     break;
                 case 2:
 
-                return;
+                    System.out.println("Arrivederci!");
+                    return;
                 default:
                     System.out.println("Opzione non valida, riprova.");
             }
         }
-    }
+
+
 
     }
     public static void aggiungiLibro(List<Libri> listaLibri) {
@@ -102,5 +104,24 @@ public class Libri extends CollezioneEditoriale {
        salvaLibri();
     }
 
-}
+    public static void rimuoviLibro(List<Libri> listaLibri, Scanner scanner){
+        System.out.println("Inserisci il codice isbn del libro da rimuovere");
+        String isbn= scanner.nextLine();
 
+        Iterator<Libri> iterator= listaLibri.iterator();
+        while (iterator.hasNext()) {
+
+            Libri libro= iterator.next();
+            if (isbn.equals(libro.isbn)){
+                iterator.remove();
+                System.out.println("Libro rimosso correttamente");
+                salvaLibri();
+                return;
+            }
+        }
+        System.out.println("Nessun libro trovato");
+
+    }
+
+
+}
