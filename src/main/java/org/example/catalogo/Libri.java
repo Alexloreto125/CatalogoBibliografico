@@ -1,5 +1,6 @@
 package org.example.catalogo;
 
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -73,37 +74,41 @@ public class Libri extends CollezioneEditoriale {
             System.out.println("6. Esci");
             System.out.println("Scelta: ");
 
-            int scelta = Integer.parseInt(scanner.nextLine());
+            try {
+                int scelta = Integer.parseInt(scanner.nextLine());
 
-            switch (scelta) {
-                case 1:
-                    aggiungiLibro(listaLibri);
-                    break;
-                case 2:
-                    rimuoviLibro(listaLibri,scanner);
-                    break;
+                switch (scelta) {
+                    case 1:
+                        aggiungiLibro(listaLibri);
+                        break;
+                    case 2:
+                        rimuoviLibro(listaLibri, scanner);
+                        break;
 
-                case 3:
-                    ricercaIsbn(listaLibri,scanner);
-                    break;
+                    case 3:
+                        ricercaIsbn(listaLibri, scanner);
+                        break;
 
-                case 4:
-                    ricercaPerAnno(listaLibri,scanner);
-                    break;
-                case 5:
-                    ricercaPerAutore(listaLibri,scanner);
-                    break;
+                    case 4:
+                        ricercaPerAnno(listaLibri, scanner);
+                        break;
+                    case 5:
+                        ricercaPerAutore(listaLibri, scanner);
+                        break;
 
-                case 6:
+                    case 6:
 
-                    System.out.println("Arrivederci!");
-                    return;
+                        System.out.println("Arrivederci!");
+                        return;
 
-                default:
-                    System.out.println("Opzione non valida, riprova.");
+                    default:
+                        System.out.println("Opzione non valida, riprova.");
+                }
+            } catch (NumberFormatException e){
+                System.out.println("Errore: Inserisci un numero valido per la scelta.");
             }
-        }
 
+        }
     }
     public static void aggiungiLibro(List<Libri> listaLibri) {
         Scanner scanner = new Scanner(System.in);
