@@ -27,8 +27,8 @@ public class Application {
 
 
     public static void main(String[] args) {
-        caricaLibri();
         caricaRiviste();
+        caricaLibri();
         Scanner scanner = new Scanner(System.in);
 
 
@@ -37,9 +37,7 @@ public class Application {
             System.out.println("Scegli un'opzione:");
             System.out.println("1. Accedi ai libri");
             System.out.println("2. Accedi alle riviste");
-            System.out.println("3. Aggiungi libro");
-            System.out.println("4. Aggiungi rivista");
-            System.out.println("5. Esci");
+            System.out.println("3. Esci");
             System.out.print("Scelta: ");
 
             int scelta = scanner.nextInt();
@@ -49,14 +47,11 @@ public class Application {
             switch (scelta) {
                 case 1:
                     accediLibri(listaLibri,scanner);
-
                     break;
                 case 2:
-                    accediRiviste(listaRiviste);
+                    accediRiviste(listaRiviste,scanner);
                     break;
-
-
-                case 5:
+                case 3:
                     System.out.println("Arrivederci!");
                     return;
                 default:
@@ -118,7 +113,7 @@ public class Application {
 
             StringBuilder content = new StringBuilder();
             for (Riviste rivista : listaRiviste) {
-                content.append(rivista.getIsbn()).append(",").append(rivista.getTitolo()).append(",").append(rivista.getNumberOfPages()).append(",").append(rivista.getYearOfPublication()).append("\n");
+                content.append(rivista.getIsbn()).append(",").append(rivista.getTitolo()).append(",").append(rivista.getNumberOfPages()).append(",").append(rivista.getYearOfPublication()).append(",").append(rivista.getPeriodicita().toString()).append("\n");
             }
 
 
@@ -137,18 +132,15 @@ public class Application {
             List<String> letturaRiviste = FileUtils.readLines(fileRiviste, StandardCharsets.UTF_8);
             for (String lettura : letturaRiviste) {
                 String[] parti = lettura.split(",");
-                if (parti.length == 4) {
+                if (parti.length == 5) {
                     listaRiviste.add(new Riviste(parti[0], parti[1],Integer.parseInt(parti[2]),Integer.parseInt(parti[3]),Periodicita.valueOf(parti[4].toLowerCase()))) ;
                 }
             }
-            System.out.println("Libri caricati correttamente.");
+            System.out.println("Riviste caricate correttamente.");
         } catch (IOException e) {
             System.out.println("Errore durante il caricamento dei libri: " + e.getMessage());
         }
     }
-
-
-
 
 }
 

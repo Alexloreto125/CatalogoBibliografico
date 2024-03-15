@@ -4,8 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.example.Application.salvaLibri;
-import static org.example.Application.salvaRiviste;
+import static org.example.Application.*;
 
 
 public class Riviste extends CollezioneEditoriale{
@@ -15,11 +14,23 @@ public class Riviste extends CollezioneEditoriale{
     public Periodicita getPeriodicita() {
         return periodicita;
     }
+
+
+    @Override
+    public String toString() {
+        return "Riviste{" +
+                "ISBN=" + isbn +
+                ", Titolo='" + titolo + '\'' +
+                ", Periodicita='" + periodicita + '\'' +
+                '}';
+    }
+
     private void ricercaRivisteToString() {
         System.out.println("IBSN: "+ this.getIsbn()+ "\n"+
                 "Titolo: " + this.getTitolo() + "\n" +
                 "Numero di pagine: " + this.getNumberOfPages() + "\n" +
-                "Anno di pubblicazione: " + this.getYearOfPublication()); ;;
+                "Anno di pubblicazione: " + this.getYearOfPublication()+ "\n"+
+                "Periodicita: "+getPeriodicita());
     }
 
 
@@ -30,9 +41,10 @@ public class Riviste extends CollezioneEditoriale{
 
 
     public static void accediRiviste(List<Riviste> listaRiviste, Scanner scanner) {
+
         System.out.println("Elenco delle riviste:");
         for (Riviste rivista : listaRiviste) {
-            System.out.println(rivista.getTitolo() + " - " + rivista.getPeriodicita());
+            System.out.println(rivista);
         }
 
         while (true) {
@@ -72,7 +84,6 @@ public class Riviste extends CollezioneEditoriale{
 
     public static void aggiungiRivista(List<Riviste> listaRiviste) {
         Scanner scanner = new Scanner(System.in);
-
         System.out.print("Inserisci il codice isbn della Rivista: ");
         String isbn = scanner.nextLine();
 
@@ -85,19 +96,36 @@ public class Riviste extends CollezioneEditoriale{
         System.out.print("Inserisci l'anno di pubblicazione della Rivista: ");
         int yearOfPublication = Integer.parseInt(scanner.nextLine());
 
-        System.out.print("Inserisci la periodicita della Rivista: ");
-        String periodicitaScan= scanner.nextLine();
-        Periodicita periodicita = Periodicita.valueOf(periodicitaScan.toLowerCase());
 
+        System.out.println("Seleziona la periodicità della Rivista:");
+        System.out.println("1. Settimanale");
+        System.out.println("2. Mensile");
+        System.out.println("3. Semestrale");
+        System.out.print("Scelta: ");
+        int scelta = Integer.parseInt(scanner.nextLine());
+        Periodicita periodicita;
+        switch (scelta) {
+
+            case 1:
+             periodicita= Periodicita.settimanale;
+                break;
+            case 2:
+                periodicita= Periodicita.mensile;
+                break;
+            case 3:
+                periodicita= Periodicita.semestrale;
+                break;
+            default:
+                System.out.println("Opzione non valida, verrà assegnata automaticamente la periodicita settimanale.");
+                periodicita= Periodicita.settimanale;
+        }
         listaRiviste.add(new Riviste(isbn,titolo,numberOfPages,yearOfPublication,periodicita));
-
-
         System.out.println("Rivista aggiunto con successo!");
         salvaRiviste();
     }
 
     public static void rimuoviRivista(List<Riviste> listaRiviste, Scanner scanner){
-        System.out.println("Inserisci il codice isbn del libro da rimuovere");
+        System.out.println("Inserisci il codice isbn della Rivista da rimuovere");
         String isbn= scanner.nextLine();
 
         Iterator<Riviste> iterator= listaRiviste.iterator();
@@ -122,13 +150,30 @@ public class Riviste extends CollezioneEditoriale{
         for (Riviste riviste : listaRiviste) {
             if (isbn.equals(riviste.getIsbn())) {
                 riviste.ricercaRivisteToString();
+                System.out.println("---------------------------------------------");
             }
         }
 
 
-        System.out.println("Nessun libro trovato");
+        System.out.println("Nessuna Rivista trovata");
     }
 
+    public static void ricercaRivistePerAnno(List<Riviste> listaRiviste,Scanner scanner){
+        System.out.println("Inserisci l'anno di pubblicazione della Rivista da cercare");
+        int yearOfPubblication= Integer.parseInt(scanner.nextLine());
+        System.out.println("Queste sono le riviste trovate in base all'anno di pubblicazione: ");
 
+        for (Riviste riviste : listaRiviste) {
+            if (yearOfPubblication==riviste.getYearOfPublication()) {
+                riviste.ricercaRivisteToString();
+                System.out.println("---------------------------------------------");
+            } else {
+             System.out.println("Nessuna Rivista trovata");
+
+            }
+        }
+
+
+    }
 
 }
